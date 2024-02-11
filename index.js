@@ -33,8 +33,6 @@ app.post("/api", async (request, response) => {
     const respo = await fetching_response.json();
     // Insert data into the database
     database.insert(respo);
-    // console.log(data.latitude);
-    // console.log(respo.main.temp);
     // Send the OpenWeatherMap API response back to the client
     response.json(respo);
   } catch (error) {
