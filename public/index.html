@@ -6,17 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Document</title>
   </head>
   <body>
-    <!-- <h1>Data Selfie App</h1> -->
     <div><a href="/">enter</a> | <a href="/logs/index.html">list</a></div>
-    <!-- <h3>Latitude : <span id="latitude"></span>°</h3>
-    <h3>Longitude : <span id="longitude"></span>°</h3> -->
-    <h1 id="text">What's the weather</h1>
+  
     <div id="map"></div>
+
+    <h1 id="text">What's the weather</h1>
     <p><span id="name"></span><br>
+    Current Location : <span id="currentLocation"></span><br>
     Latitude : <span id="latitude"></span>°<br>
     Longitude : <span id="longitude"></span>°</p>
     Temprature : <span id="temp"></span>°Calsius<br>
@@ -25,6 +28,10 @@
     Description : <span id="description"></span></p>
     <input type="button" value="FindMe" id="submit" />
     <!-- <button id="submit">submit</button> -->
-    <script src="sketch.js"></script>
+   
   </body>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""></script>
+      <script src="sketch.js"></script>
 </html>
