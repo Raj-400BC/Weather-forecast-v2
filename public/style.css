@@ -2,3 +2,6 @@ h1 , h3{
     padding: 10px;
     background-color: #cc69cc;
   }
+
+  #map { height: 380px; 
+  }
