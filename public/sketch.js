@@ -45,16 +45,34 @@ document.addEventListener('DOMContentLoaded', function setup() {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch("/api", options);
-      const json = await response.json();
-      console.log(json);
-        // document.getElementById("lat").textContent = json.coord.lat.toFixed(2);
-        // document.getElementById("lon").textContent = json.coord.lon.toFixed(2);
-        document.getElementById("currentLocation").textContent = json.name;
-        document.getElementById("temp").textContent = json.main.temp;
-        document.getElementById("speed").textContent = json.wind.speed;
-        document.getElementById("weather").textContent = json.weather[0].main;
-        document.getElementById("description").textContent = json.weather[0].description;
+      fetch("/api", options)
+  .then(response => response.json())
+  .then(data => {
+    // Assuming the structure is { "airQuality": {...}, "weather": {...} }
+    const airQualityData = data.airQuality;
+    const weatherData = data.weather;
+
+    // Update your HTML elements with the new data
+    document.getElementById("currentLocation").textContent = weatherData.name;
+    document.getElementById("temp").textContent = weatherData.main.temp;
+    document.getElementById("speed").textContent = weatherData.wind.speed;
+    document.getElementById("weather").textContent = weatherData.weather[0].main;
+    document.getElementById("description").textContent = weatherData.weather[0].description;
+    if (airQualityData.results && airQualityData.results[0] && airQualityData.results[0].country) {
+      console.log(airQualityData.results[0].country);
+    } else {
+      console.error("Error: Unexpected response structure or missing data.");
+    }
+    
+
+    // Handle air quality data if needed
+    // const airQualityIndex = airQualityData.someProperty;
+    // document.getElementById("airQualityIndex").textContent = airQualityIndex;
+  })
+  .catch(error => {
+    console.error("Error fetching data:", error);
+    // Handle errors as needed
+  });
         // console.log(json);
       });
     });
