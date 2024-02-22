@@ -3,6 +3,7 @@ import Datastore from "nedb";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
+const Api = process.env.API_KEY;
 const app = express();
 app.listen(3001, () => console.log("listening at 3001"));
 app.use(express.static("public"));
@@ -26,27 +27,16 @@ app.get("/api", (request, response) => {
 app.post("/api", async (request, response) => {
   const data = request.body;
   const apiKey = process.env.API_KEY;
-  const airQualityAPI = `https://api.openaq.org/v1/latest?coordinates=40.73,-73.99`;
-  const weatherAPI = `https://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&units=metric&appid=${apiKey}`;
-
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&units=metric&appid=${apiKey}`;
   try {
-    // Use Promise.all to fetch data from both APIs concurrently
-    const [airQualityResponse, weatherResponse] = await Promise.all([
-      fetch(airQualityAPI),
-      fetch(weatherAPI)
-    ]);
-
-    // Parse the responses
-    const airQualityData = await airQualityResponse.json();
-    const weatherData = await weatherResponse.json();
-
-    // Insert data into the database (assuming you have a 'database' object)
-    database.insert({ airQuality: airQualityData, weather: weatherData });
-
-    // Send the combined response back to the client
-    response.json({ airQuality: airQualityData, weather: weatherData });
+    const fetching_response = await fetch(apiUrl);
+    const respo = await fetching_response.json();
+    // Insert data into the database
+    database.insert(respo);
+    // Send the OpenWeatherMap API response back to the client
+    response.json(respo);
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching data from OpenWeatherMap API:", error);
     response.status(500).json({ error: "Internal Server Error" });
   }
 });
